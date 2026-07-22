@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as ForInsurersRouteImport } from './routes/for-insurers'
+import { Route as ForPracticesRouteImport } from './routes/for-practices'
+import { Route as OurEdgeRouteImport } from './routes/our-edge'
+import { Route as PressRouteImport } from './routes/press'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForInsurersRoute = ForInsurersRouteImport.update({
+  id: '/for-insurers',
+  path: '/for-insurers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForPracticesRoute = ForPracticesRouteImport.update({
+  id: '/for-practices',
+  path: '/for-practices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurEdgeRoute = OurEdgeRouteImport.update({
+  id: '/our-edge',
+  path: '/our-edge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PressRoute = PressRouteImport.update({
+  id: '/press',
+  path: '/press',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/for-insurers': typeof ForInsurersRoute
+  '/for-practices': typeof ForPracticesRoute
+  '/our-edge': typeof OurEdgeRoute
+  '/press': typeof PressRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/for-insurers': typeof ForInsurersRoute
+  '/for-practices': typeof ForPracticesRoute
+  '/our-edge': typeof OurEdgeRoute
+  '/press': typeof PressRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/for-insurers': typeof ForInsurersRoute
+  '/for-practices': typeof ForPracticesRoute
+  '/our-edge': typeof OurEdgeRoute
+  '/press': typeof PressRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/for-insurers'
+    | '/for-practices'
+    | '/our-edge'
+    | '/press'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/for-insurers'
+    | '/for-practices'
+    | '/our-edge'
+    | '/press'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/for-insurers'
+    | '/for-practices'
+    | '/our-edge'
+    | '/press'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CareersRoute: typeof CareersRoute
+  ForInsurersRoute: typeof ForInsurersRoute
+  ForPracticesRoute: typeof ForPracticesRoute
+  OurEdgeRoute: typeof OurEdgeRoute
+  PressRoute: typeof PressRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +130,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-insurers': {
+      id: '/for-insurers'
+      path: '/for-insurers'
+      fullPath: '/for-insurers'
+      preLoaderRoute: typeof ForInsurersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-practices': {
+      id: '/for-practices'
+      path: '/for-practices'
+      fullPath: '/for-practices'
+      preLoaderRoute: typeof ForPracticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-edge': {
+      id: '/our-edge'
+      path: '/our-edge'
+      fullPath: '/our-edge'
+      preLoaderRoute: typeof OurEdgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/press': {
+      id: '/press'
+      path: '/press'
+      fullPath: '/press'
+      preLoaderRoute: typeof PressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CareersRoute: CareersRoute,
+  ForInsurersRoute: ForInsurersRoute,
+  ForPracticesRoute: ForPracticesRoute,
+  OurEdgeRoute: OurEdgeRoute,
+  PressRoute: PressRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
