@@ -1,24 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLenis } from "@/hooks/useLenis";
+import { Nav } from "@/components/Nav";
+import { HeroSection } from "@/sections/HeroSection";
+import { StoryTransition } from "@/sections/StoryTransition";
+import { EditorialStatement } from "@/sections/EditorialStatement";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Aether — Clinical intelligence, quietly" },
+      {
+        name: "description",
+        content:
+          "Aether is a clinical intelligence layer that listens between the signals and returns time to the people who practice medicine.",
+      },
+      { property: "og:title", content: "Aether — Clinical intelligence, quietly" },
+      {
+        property: "og:description",
+        content:
+          "A quiet intelligence for human health. Aether returns attention to the practice of medicine.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  useLenis();
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-paper text-ink antialiased">
+      <Nav />
+      <main>
+        <HeroSection />
+        <StoryTransition />
+        <EditorialStatement />
+      </main>
     </div>
   );
 }
