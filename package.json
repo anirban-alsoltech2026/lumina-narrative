@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "vercel-build": "vite build && nitro build"
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
